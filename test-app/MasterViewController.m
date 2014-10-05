@@ -119,9 +119,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        TableViewCellDetails *contact = [self getContactForIndexPath:indexPath];
-        [segue.destinationViewController setDetailItem:contact.dbObject];
+        UITableView *tableView = (self.searchDisplayController.active) ? self.searchDisplayController.searchResultsTableView : self.tableView;
+        NSIndexPath *indexPath = [tableView indexPathForSelectedRow];
+        if (indexPath) {
+            TableViewCellDetails *contact = [self getContactForIndexPath:indexPath];
+            [segue.destinationViewController setDetailItem:contact.dbObject];
+        }
     }
 }
 
