@@ -11,12 +11,14 @@
 @class DetailViewController;
 
 #import <CoreData/CoreData.h>
+#import "AddressBookContacts.h"
 
-@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, AddressBookContactsDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 
+@property (strong, nonatomic) AddressBookContacts *addressBookContacts;
 @property (strong, nonatomic) DetailViewController *detailViewController;
-
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
 
 @end

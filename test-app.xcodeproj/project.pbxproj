@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		328AD16619DA43FC0085DE3C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328AD16419DA43FC0085DE3C /* AddressBook.framework */; };
+		328AD16719DA43FC0085DE3C /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328AD16519DA43FC0085DE3C /* AddressBookUI.framework */; };
 		329B90AD19DA35CC00375289 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B90AC19DA35CC00375289 /* Foundation.framework */; };
 		329B90AF19DA35CC00375289 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B90AE19DA35CC00375289 /* CoreGraphics.framework */; };
 		329B90B119DA35CC00375289 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B90B019DA35CC00375289 /* UIKit.framework */; };
@@ -20,49 +22,34 @@
 		329B90CB19DA35CC00375289 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 329B90CA19DA35CC00375289 /* MasterViewController.m */; };
 		329B90CE19DA35CC00375289 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 329B90CD19DA35CC00375289 /* DetailViewController.m */; };
 		329B90D019DA35CC00375289 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 329B90CF19DA35CC00375289 /* Images.xcassets */; };
-		329B90D719DA35CD00375289 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B90D619DA35CD00375289 /* XCTest.framework */; };
-		329B90D819DA35CD00375289 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B90AC19DA35CC00375289 /* Foundation.framework */; };
-		329B90D919DA35CD00375289 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B90B019DA35CC00375289 /* UIKit.framework */; };
-		329B90DA19DA35CD00375289 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B90B219DA35CC00375289 /* CoreData.framework */; };
-		329B90E219DA35CD00375289 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 329B90E019DA35CD00375289 /* InfoPlist.strings */; };
-		329B90E419DA35CD00375289 /* test_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 329B90E319DA35CD00375289 /* test_appTests.m */; };
+		32B4361819DB82D50092D010 /* AddressBookContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B4361719DB82D50092D010 /* AddressBookContacts.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		329B90DB19DA35CD00375289 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 329B90A119DA35CC00375289 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 329B90A819DA35CC00375289;
-			remoteInfo = "test-app";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		328AD16419DA43FC0085DE3C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		328AD16519DA43FC0085DE3C /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		328AD16819DA50830085DE3C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		328AD16919DA51CE0085DE3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		329B90A919DA35CC00375289 /* test-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		329B90AC19DA35CC00375289 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		329B90AE19DA35CC00375289 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		329B90B019DA35CC00375289 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		329B90B219DA35CC00375289 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		329B90B619DA35CC00375289 /* test-app-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test-app-Info.plist"; sourceTree = "<group>"; };
-		329B90B819DA35CC00375289 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		329B90BA19DA35CC00375289 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		329B90BC19DA35CC00375289 /* test-app-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "test-app-Prefix.pch"; sourceTree = "<group>"; };
 		329B90BD19DA35CC00375289 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		329B90BE19DA35CC00375289 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		329B90C119DA35CC00375289 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		329B90C419DA35CC00375289 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		329B90C719DA35CC00375289 /* test_app.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = test_app.xcdatamodel; sourceTree = "<group>"; };
 		329B90C919DA35CC00375289 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		329B90CA19DA35CC00375289 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		329B90CC19DA35CC00375289 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		329B90CD19DA35CC00375289 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		329B90CF19DA35CC00375289 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		329B90D519DA35CD00375289 /* test-appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "test-appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		329B90D619DA35CD00375289 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		329B90DF19DA35CD00375289 /* test-appTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test-appTests-Info.plist"; sourceTree = "<group>"; };
-		329B90E119DA35CD00375289 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		329B90E319DA35CD00375289 /* test_appTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = test_appTests.m; sourceTree = "<group>"; };
+		32B4361619DB82D50092D010 /* AddressBookContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookContacts.h; sourceTree = "<group>"; };
+		32B4361719DB82D50092D010 /* AddressBookContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookContacts.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,21 +57,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				328AD16619DA43FC0085DE3C /* AddressBook.framework in Frameworks */,
+				328AD16719DA43FC0085DE3C /* AddressBookUI.framework in Frameworks */,
 				329B90AF19DA35CC00375289 /* CoreGraphics.framework in Frameworks */,
 				329B90B319DA35CC00375289 /* CoreData.framework in Frameworks */,
 				329B90B119DA35CC00375289 /* UIKit.framework in Frameworks */,
 				329B90AD19DA35CC00375289 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		329B90D219DA35CD00375289 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				329B90D719DA35CD00375289 /* XCTest.framework in Frameworks */,
-				329B90DA19DA35CD00375289 /* CoreData.framework in Frameworks */,
-				329B90D919DA35CD00375289 /* UIKit.framework in Frameworks */,
-				329B90D819DA35CD00375289 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,17 +73,16 @@
 			isa = PBXGroup;
 			children = (
 				329B90B419DA35CC00375289 /* test-app */,
-				329B90DD19DA35CD00375289 /* test-appTests */,
 				329B90AB19DA35CC00375289 /* Frameworks */,
 				329B90AA19DA35CC00375289 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		329B90AA19DA35CC00375289 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				329B90A919DA35CC00375289 /* test-app.app */,
-				329B90D519DA35CD00375289 /* test-appTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,6 +90,8 @@
 		329B90AB19DA35CC00375289 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				328AD16419DA43FC0085DE3C /* AddressBook.framework */,
+				328AD16519DA43FC0085DE3C /* AddressBookUI.framework */,
 				329B90AC19DA35CC00375289 /* Foundation.framework */,
 				329B90AE19DA35CC00375289 /* CoreGraphics.framework */,
 				329B90B019DA35CC00375289 /* UIKit.framework */,
@@ -127,6 +106,8 @@
 			children = (
 				329B90BD19DA35CC00375289 /* AppDelegate.h */,
 				329B90BE19DA35CC00375289 /* AppDelegate.m */,
+				32B4361619DB82D50092D010 /* AddressBookContacts.h */,
+				32B4361719DB82D50092D010 /* AddressBookContacts.m */,
 				329B90C019DA35CC00375289 /* Main_iPhone.storyboard */,
 				329B90C319DA35CC00375289 /* Main_iPad.storyboard */,
 				329B90C919DA35CC00375289 /* MasterViewController.h */,
@@ -151,24 +132,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		329B90DD19DA35CD00375289 /* test-appTests */ = {
-			isa = PBXGroup;
-			children = (
-				329B90E319DA35CD00375289 /* test_appTests.m */,
-				329B90DE19DA35CD00375289 /* Supporting Files */,
-			);
-			path = "test-appTests";
-			sourceTree = "<group>";
-		};
-		329B90DE19DA35CD00375289 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				329B90DF19DA35CD00375289 /* test-appTests-Info.plist */,
-				329B90E019DA35CD00375289 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -189,24 +152,6 @@
 			productReference = 329B90A919DA35CC00375289 /* test-app.app */;
 			productType = "com.apple.product-type.application";
 		};
-		329B90D419DA35CD00375289 /* test-appTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 329B90EA19DA35CD00375289 /* Build configuration list for PBXNativeTarget "test-appTests" */;
-			buildPhases = (
-				329B90D119DA35CD00375289 /* Sources */,
-				329B90D219DA35CD00375289 /* Frameworks */,
-				329B90D319DA35CD00375289 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				329B90DC19DA35CD00375289 /* PBXTargetDependency */,
-			);
-			name = "test-appTests";
-			productName = "test-appTests";
-			productReference = 329B90D519DA35CD00375289 /* test-appTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -215,11 +160,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Boris Godin";
-				TargetAttributes = {
-					329B90D419DA35CD00375289 = {
-						TestTargetID = 329B90A819DA35CC00375289;
-					};
-				};
 			};
 			buildConfigurationList = 329B90A419DA35CC00375289 /* Build configuration list for PBXProject "test-app" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -235,7 +175,6 @@
 			projectRoot = "";
 			targets = (
 				329B90A819DA35CC00375289 /* test-app */,
-				329B90D419DA35CD00375289 /* test-appTests */,
 			);
 		};
 /* End PBXProject section */
@@ -252,14 +191,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		329B90D319DA35CD00375289 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				329B90E219DA35CD00375289 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -267,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32B4361819DB82D50092D010 /* AddressBookContacts.m in Sources */,
 				329B90CE19DA35CC00375289 /* DetailViewController.m in Sources */,
 				329B90CB19DA35CC00375289 /* MasterViewController.m in Sources */,
 				329B90BF19DA35CC00375289 /* AppDelegate.m in Sources */,
@@ -275,29 +207,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		329B90D119DA35CD00375289 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				329B90E419DA35CD00375289 /* test_appTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		329B90DC19DA35CD00375289 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 329B90A819DA35CC00375289 /* test-app */;
-			targetProxy = 329B90DB19DA35CD00375289 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		329B90B719DA35CC00375289 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				329B90B819DA35CC00375289 /* en */,
+				328AD16919DA51CE0085DE3C /* Base */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -313,17 +229,9 @@
 		329B90C319DA35CC00375289 /* Main_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				329B90C419DA35CC00375289 /* Base */,
+				328AD16819DA50830085DE3C /* en */,
 			);
 			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		329B90E019DA35CD00375289 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				329B90E119DA35CD00375289 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -406,9 +314,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test-app/test-app-Prefix.pch";
 				INFOPLIST_FILE = "test-app/test-app-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -419,51 +329,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "test-app/test-app-Prefix.pch";
 				INFOPLIST_FILE = "test-app/test-app-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		329B90EB19DA35CD00375289 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-app.app/test-app";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "test-app/test-app-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "test-appTests/test-appTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		329B90EC19DA35CD00375289 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-app.app/test-app";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "test-app/test-app-Prefix.pch";
-				INFOPLIST_FILE = "test-appTests/test-appTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -486,14 +358,7 @@
 				329B90E919DA35CD00375289 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		329B90EA19DA35CD00375289 /* Build configuration list for PBXNativeTarget "test-appTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				329B90EB19DA35CD00375289 /* Debug */,
-				329B90EC19DA35CD00375289 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

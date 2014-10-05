@@ -11,8 +11,15 @@
 #import "DetailViewController.h"
 
 @interface MasterViewController ()
+{
+    __strong NSManagedObjectContext *_managedObjectContext;
+}
+
+@property (strong,nonatomic) NSMutableArray *filteredArray;
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
+
 
 @implementation MasterViewController
 
@@ -29,11 +36,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    /*UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearch:)];
+    self.navigationItem.rightBarButtonItem = searchButton;*/
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    _addressBookContacts = [[AddressBookContacts alloc] initWithDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,24 +51,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
+- (void)showSearch:(id)sender
 {
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-         // Replace this implementation with code to handle the error appropriately.
-         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
+    self.searchDisplayController.searchBar.hidden = NO;
 }
 
 #pragma mark - Table View
@@ -77,31 +71,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    // TODO: check if tableView is self.tableView. If not, it is search tableView, need
+    // to create new cell (requires setup in storyboard).
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }   
+    return NO;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,40 +110,52 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (_fetchedResultsController != nil) {
+    if (_fetchedResultsController != nil)
         return _fetchedResultsController;
-    }
+
+    if (_managedObjectContext == nil)
+        return nil;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DbPerson" inManagedObjectContext:_managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                   managedObjectContext:_managedObjectContext
+                                                                     sectionNameKeyPath:nil
+                                                                              cacheName:@"TestAppDbCache"];
+    _fetchedResultsController.delegate = self;
     
 	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
-	     // Replace this implementation with code to handle the error appropriately.
-	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
-    
+    @try {
+        if (![_fetchedResultsController performFetch:&error]) {
+            @throw [[NSException alloc] initWithName:@"NSFetchedResultsControllerException"
+                                              reason:[error localizedDescription]
+                                            userInfo:[error userInfo]];
+        }
+    }
+    @catch (NSException *exception) {
+        [NSFetchedResultsController deleteCacheWithName:@"TestAppDbCache"];
+        // Try again.
+        if (![_fetchedResultsController performFetch:&error]) {
+            NSLog(@"Unresolved error %@, %@", [error localizedDescription], [error userInfo]);
+        }
+    }
+
     return _fetchedResultsController;
-}    
+}
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -217,19 +208,79 @@
 }
 
 /*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
+ // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
  
  - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
-}
+ {
+ // In the simplest, most efficient, case, reload the table view.
+ [self.tableView reloadData];
+ }
  */
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    if (object)
+    {
+        cell.textLabel.text = [object valueForKey:@"name"];
+        
+        NSMutableString *phonesStr = [[NSMutableString alloc] init];
+        NSArray *phones = [object valueForKey:@"phones"];
+        for (int i=0; i < [phones count]; ++i) {
+            [phonesStr appendFormat:@"%@; ", [phones objectAtIndex:i]];
+        }
+        cell.detailTextLabel.text = phonesStr;
+        
+        NSData* image = [object valueForKey:@"image"];
+        if (image == nil)
+            cell.imageView.image = [UIImage imageNamed:@"DefaultContact"];
+        else
+            cell.imageView.image = [UIImage imageWithData:image];
+    }
+}
+
+#pragma mark Search bar
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [_filteredArray removeAllObjects];
+    NSArray *all = [_fetchedResultsController fetchedObjects];
+    // TODO: use predicates.
+    for (int i=0; i < [all count]; ++i) {
+        id object = [all objectAtIndex:i];
+        NSString *name = [object valueForKey:@"name"];
+        if ([name rangeOfString:searchText].location != NSNotFound) {
+            [_filteredArray addObject:object];
+        }
+        // TODO: phones.
+        NSString *phones = [object valueForKey:@"phones"];
+    }
+
+    [self searchDisplayController:_searchDisplayController shouldReloadTableForSearchString:searchText];
+}
+
+#pragma mark - AddressBookLoadDelegate
+
+- (void)loadedWithDb:(NSManagedObjectContext *)db withAccessGranted:(BOOL)granted withDbSaved:(BOOL)saved
+{
+    [_activityIndicator stopAnimating];
+    
+    NSString *error1 = nil, *error2 = nil;
+    if (!granted) {
+        error1 = @"Access to address book is rejected.";
+    }
+    if (!saved) {
+        error2 = @"Could not save database";
+    }
+    if (error1 || error2) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:[NSString stringWithFormat:@"%@ %@", error1, error2]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    _managedObjectContext = db;
+    [self.tableView reloadData];
 }
 
 @end
