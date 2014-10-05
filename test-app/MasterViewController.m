@@ -10,14 +10,38 @@
 
 #import "DetailViewController.h"
 
-@interface MasterViewController ()
-{
-    __strong NSManagedObjectContext *_managedObjectContext;
+
+#pragma mark - TableViewCellDetails
+
+@interface TableViewCellDetails : NSObject
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *phones;
+@property (strong, nonatomic) NSData *image;
+@property (strong, nonatomic) NSManagedObject *dbObject;
+- (BOOL)matchesSearch:(NSString*)text;
+@end
+
+
+@implementation TableViewCellDetails
+- (BOOL)matchesSearch:(NSString*)text {
+    return ([self.name rangeOfString:text options:NSCaseInsensitiveSearch].location != NSNotFound) ||
+           ([self.phones rangeOfString:text options:NSCaseInsensitiveSearch].location != NSNotFound);
 }
+@end
 
-@property (strong,nonatomic) NSMutableArray *filteredArray;
 
+#pragma mark - MasterViewController
+
+@interface MasterViewController () {
+    __strong NSManagedObjectContext *_managedObjectContext;
+    NSMutableArray *_filteredContacts; // array of TableViewCellDetails
+    NSMutableArray *_contacts; // array of TableViewCellDetails
+}
+- (void)showSearch:(id)sender;
+- (TableViewCellDetails*)getContactForIndexPath:(NSIndexPath*)indexPath;
+- (void)populateContacts;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void) updateFilteredWithSearch:(NSString*)searchText;
 @end
 
 
@@ -38,9 +62,13 @@
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    /*UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearch:)];
-    self.navigationItem.rightBarButtonItem = searchButton;*/
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showSearch:)];
+    self.navigationItem.rightBarButtonItem = searchButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    
+    CGPoint offset = self.tableView.contentOffset;
+    UISearchBar *searchBar = self.searchDisplayController.searchBar;
+    self.tableView.contentOffset = CGPointMake(offset.x, offset.y + searchBar.frame.size.height);
     
     _addressBookContacts = [[AddressBookContacts alloc] initWithDelegate:self];
 }
@@ -51,28 +79,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)showSearch:(id)sender
-{
-    self.searchDisplayController.searchBar.hidden = NO;
-}
-
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    return (tableView == self.tableView) ? [_contacts count] : [_filteredContacts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // TODO: check if tableView is self.tableView. If not, it is search tableView, need
-    // to create new cell (requires setup in storyboard).
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
@@ -91,18 +111,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        self.detailViewController.detailItem = object;
-    }
+    //if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    TableViewCellDetails *contact = [self getContactForIndexPath:indexPath];
+    self.detailViewController.detailItem = contact.dbObject;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+        TableViewCellDetails *contact = [self getContactForIndexPath:indexPath];
+        [segue.destinationViewController setDetailItem:contact.dbObject];
     }
 }
 
@@ -217,21 +236,27 @@
  }
  */
 
+# pragma mark - Private methods
+
+- (void)showSearch:(id)sender {
+    [self.searchDisplayController.searchBar becomeFirstResponder];
+}
+
+- (TableViewCellDetails*)getContactForIndexPath:(NSIndexPath*)indexPath
+{
+    NSInteger index = [indexPath row];
+    return (self.searchDisplayController.active) ? [_filteredContacts objectAtIndex:index] : [_contacts objectAtIndex:index];
+}
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (object)
+    TableViewCellDetails *contact = [self getContactForIndexPath:indexPath];
+    if (contact)
     {
-        cell.textLabel.text = [object valueForKey:@"name"];
+        cell.textLabel.text = contact.name;
+        cell.detailTextLabel.text = contact.phones;
         
-        NSMutableString *phonesStr = [[NSMutableString alloc] init];
-        NSArray *phones = [object valueForKey:@"phones"];
-        for (int i=0; i < [phones count]; ++i) {
-            [phonesStr appendFormat:@"%@; ", [phones objectAtIndex:i]];
-        }
-        cell.detailTextLabel.text = phonesStr;
-        
-        NSData* image = [object valueForKey:@"image"];
+        NSData* image = contact.image;
         if (image == nil)
             cell.imageView.image = [UIImage imageNamed:@"DefaultContact"];
         else
@@ -239,26 +264,66 @@
     }
 }
 
-#pragma mark Search bar
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    [_filteredArray removeAllObjects];
-    NSArray *all = [_fetchedResultsController fetchedObjects];
-    // TODO: use predicates.
+- (void)populateContacts
+{
+    [_filteredContacts removeAllObjects];
+    [_contacts removeAllObjects];
+    
+    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:0];
+    NSArray *all = [sectionInfo objects];
     for (int i=0; i < [all count]; ++i) {
-        id object = [all objectAtIndex:i];
-        NSString *name = [object valueForKey:@"name"];
-        if ([name rangeOfString:searchText].location != NSNotFound) {
-            [_filteredArray addObject:object];
+        NSManagedObject *object = [all objectAtIndex:i];
+        
+        NSMutableString *phonesStr = [[NSMutableString alloc] init];
+        NSArray *phones = [object valueForKey:@"phones"];
+        for (int i=0; i < [phones count]; ++i) {
+            [phonesStr appendFormat:@"%@; ", [phones objectAtIndex:i]];
         }
-        // TODO: phones.
-        NSString *phones = [object valueForKey:@"phones"];
-    }
 
-    [self searchDisplayController:_searchDisplayController shouldReloadTableForSearchString:searchText];
+        TableViewCellDetails *contact = [[TableViewCellDetails alloc] init];
+        contact.dbObject = object;
+        contact.name = [object valueForKey:@"name"];
+        contact.image = [object valueForKey:@"image"];
+        contact.phones = phonesStr;
+        [_contacts addObject:contact];
+    }
 }
 
-#pragma mark - AddressBookLoadDelegate
+- (void) updateFilteredWithSearch:(NSString*)searchText
+{
+    [_filteredContacts removeAllObjects];
+    for (int i=0; i < [_contacts count]; ++i) {
+        TableViewCellDetails* contact = [_contacts objectAtIndex:i];
+        if ([contact matchesSearch:searchText]) {
+            [_filteredContacts addObject:contact];
+        }
+    }
+}
+
+#pragma mark - Search bar
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self updateFilteredWithSearch:searchString];
+    return YES;
+}
+
+// For search view not to change cell height.
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+#pragma mark - AddressBookContactsDelegate
 
 - (void)loadedWithDb:(NSManagedObjectContext *)db withAccessGranted:(BOOL)granted withDbSaved:(BOOL)saved
 {
@@ -280,6 +345,11 @@
         [alert show];
     }
     _managedObjectContext = db;
+
+    _contacts = [[NSMutableArray alloc] init];
+    _filteredContacts = [[NSMutableArray alloc] init];
+
+    [self populateContacts];
     [self.tableView reloadData];
 }
 

@@ -8,15 +8,20 @@
 
 #import "AddressBookContacts.h"
 
-@interface AddressBookContacts ()
-{
+@interface AddressBookContacts (){
     ABAddressBookRef _addressBook;
 }
-@property (weak, nonatomic) id<AddressBookContactsDelegate> delegate;
 
+@property (weak, nonatomic) id<AddressBookContactsDelegate> delegate;
 @property (strong, nonatomic) NSManagedObjectModel* managedObjectModel;
 @property (strong, nonatomic) NSPersistentStoreCoordinator* persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+- (void)checkAddressBookAccess;
+- (void)addressBookSaveWithAccess:(BOOL)granted;
+- (NSData *)imageWithData:(NSData *)data scaledToSize:(CGSize)newSize;
+- (NSURL *)persistentStoreURL;
+- (void)removePersistentStore;
 @end
 
 
@@ -28,6 +33,15 @@
 @synthesize delegate = _delegate;
 
 #pragma mark - Address Book handling
+
+- (id) init
+{
+    self = [super init];
+    if (self) {
+        [self removePersistentStore]; // TODO: sinchronize instead of just remove and then add all contacts.
+    }
+    return self;
+}
 
 - (id)initWithDelegate:(id<AddressBookContactsDelegate>)delegate
 {
@@ -159,8 +173,6 @@
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
-    
-    [self removePersistentStore];
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {

@@ -19,6 +19,5 @@
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
 
 @end
