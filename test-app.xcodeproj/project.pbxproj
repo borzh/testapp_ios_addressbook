@@ -22,6 +22,7 @@
 		329B90CB19DA35CC00375289 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 329B90CA19DA35CC00375289 /* MasterViewController.m */; };
 		329B90CE19DA35CC00375289 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 329B90CD19DA35CC00375289 /* DetailViewController.m */; };
 		329B90D019DA35CC00375289 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 329B90CF19DA35CC00375289 /* Images.xcassets */; };
+		32B15A1A19E2409B007BCA9B /* HttpMultiPartBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B15A1919E2409B007BCA9B /* HttpMultiPartBody.m */; };
 		32B4361819DB82D50092D010 /* AddressBookContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 32B4361719DB82D50092D010 /* AddressBookContacts.m */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,8 @@
 		329B90CD19DA35CC00375289 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		329B90CF19DA35CC00375289 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		329B90D619DA35CD00375289 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		32B15A1819E2409B007BCA9B /* HttpMultiPartBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpMultiPartBody.h; sourceTree = "<group>"; };
+		32B15A1919E2409B007BCA9B /* HttpMultiPartBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpMultiPartBody.m; sourceTree = "<group>"; };
 		32B4361619DB82D50092D010 /* AddressBookContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookContacts.h; sourceTree = "<group>"; };
 		32B4361719DB82D50092D010 /* AddressBookContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookContacts.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,12 +111,14 @@
 				329B90BE19DA35CC00375289 /* AppDelegate.m */,
 				32B4361619DB82D50092D010 /* AddressBookContacts.h */,
 				32B4361719DB82D50092D010 /* AddressBookContacts.m */,
-				329B90C019DA35CC00375289 /* Main_iPhone.storyboard */,
-				329B90C319DA35CC00375289 /* Main_iPad.storyboard */,
+				32B15A1819E2409B007BCA9B /* HttpMultiPartBody.h */,
+				32B15A1919E2409B007BCA9B /* HttpMultiPartBody.m */,
 				329B90C919DA35CC00375289 /* MasterViewController.h */,
 				329B90CA19DA35CC00375289 /* MasterViewController.m */,
 				329B90CC19DA35CC00375289 /* DetailViewController.h */,
 				329B90CD19DA35CC00375289 /* DetailViewController.m */,
+				329B90C019DA35CC00375289 /* Main_iPhone.storyboard */,
+				329B90C319DA35CC00375289 /* Main_iPad.storyboard */,
 				329B90CF19DA35CC00375289 /* Images.xcassets */,
 				329B90C619DA35CC00375289 /* test_app.xcdatamodeld */,
 				329B90B519DA35CC00375289 /* Supporting Files */,
@@ -202,6 +207,7 @@
 				329B90CE19DA35CC00375289 /* DetailViewController.m in Sources */,
 				329B90CB19DA35CC00375289 /* MasterViewController.m in Sources */,
 				329B90BF19DA35CC00375289 /* AppDelegate.m in Sources */,
+				32B15A1A19E2409B007BCA9B /* HttpMultiPartBody.m in Sources */,
 				329B90C819DA35CC00375289 /* test_app.xcdatamodeld in Sources */,
 				329B90BB19DA35CC00375289 /* main.m in Sources */,
 			);

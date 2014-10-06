@@ -51,7 +51,9 @@
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
-        self.preferredContentSize = CGSizeMake(320.0, 600.0);
+        if ( [self respondsToSelector:@selector(setPreferredContentSize:)] ) {
+            self.preferredContentSize = CGSizeMake(320.0, 600.0);
+        }
     }
     [super awakeFromNib];
 }
@@ -330,8 +332,6 @@
 
 - (void)loadedWithDb:(NSManagedObjectContext *)db withAccessGranted:(BOOL)granted withDbSaved:(BOOL)saved
 {
-    [_activityIndicator stopAnimating];
-    
     NSString *error1 = nil, *error2 = nil;
     if (!granted) {
         error1 = @"Access to address book is rejected.";

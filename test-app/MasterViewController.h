@@ -18,6 +18,5 @@
 @property (strong, nonatomic) AddressBookContacts *addressBookContacts;
 @property (strong, nonatomic) DetailViewController *detailViewController;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
