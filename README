@@ -1,0 +1,17 @@
+Codificar aplicación que realice las siguientes tareas:
+
+	-	Copia en db local los registros del address book.
+	-	Los registros deben incluir las siguientes propiedades: “Composite Name”, “Picture”, “Phone Numbers”
+	-	Muestra todos los registros en una lista simple.
+	-	Cada celda muestra la imagen del registro si tiene, el nombre y los teléfonos.
+	-	La lista permite aplicar filtro de búsqueda según nombre  o teléfono.
+	-	Cuando se selecciona un registro de la lista se envía una consulta a un webservice y se muestra el resultado en una nueva vista.
+
+Requerimientos:
+
+	-	Usar solo frameworks nativos del iOS.
+	-	Para la base de datos local usar Core Data.
+	-	La carga de datos del address book no debe bloquear el main thread.
+	-	El webservice a consultar se encuentra descripto en el html adjunto, el campo “phoneNumber” es obligatorio, los campos “defaultCountry”, “languageCode”, “regionCode” y “numberFile” deben viajar en el request pero deben ser nulos. Se debe respetar el “method” y “enctype” del formulario.
+
+
