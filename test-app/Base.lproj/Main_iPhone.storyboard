@@ -64,7 +64,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="Ah7-4n-0Wa" kind="push" identifier="showDetail" id="9q2-HN-CZx"/>
                                 </connections>
@@ -78,7 +77,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="TestApp" id="tQt-TN-PWz"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="uzP-bM-nYc" id="S4v-cN-6OV"/>
                         <outlet property="searchDisplayController" destination="gGq-Y7-Ch6" id="4N4-iK-JPo"/>
                     </connections>
                 </tableViewController>

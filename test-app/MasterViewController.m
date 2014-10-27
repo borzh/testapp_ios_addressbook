@@ -319,10 +319,6 @@
     return 80;
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-}
-
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
